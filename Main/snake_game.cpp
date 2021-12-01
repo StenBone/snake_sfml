@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "Constants.hpp"
 
 void place_treat_in_random_location() {
 
@@ -22,6 +23,7 @@ class Game {
 
 class Player {
 	// process player related input
+	// reference to snake actor
 };
 
 class Actor {
@@ -29,7 +31,7 @@ class Actor {
 };
 
 class Snake {
-
+	// vector of segments
 };
 
 class PlayArea {
@@ -39,4 +41,23 @@ class PlayArea {
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "danger noodle");
+
+	/**
+	game.loadscene("snake_level.json")
+		renderer.init
+		snake.init
+		input.init
+		assetmanager.load(snake.assets)
+		assetmananger.load(treat.assets)
+		assetmananger.close
+	game.begin_loop()
+	game.end()
+	*/
+
+	// load assests: sound, font, textures
+
+	// main loop
+	while (window.isOpen()) {
+
+	}
 }

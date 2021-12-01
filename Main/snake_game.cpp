@@ -56,8 +56,14 @@ int main() {
 
 	// load assests: sound, font, textures
 
+	// setup game - place first treat, place snake in center
+
 	// main loop
 	while (window.isOpen()) {
-
+		//process input - get next direction snake is going
+		//move snake
+		//check if snake's head is on a treat, in it's body, outside bounds
+		//if treat, then grow extra unit at tail
+		//if body or outside bounds then game over
 	}
-}
+} // what can this snake game do differently than others

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "Constants.hpp"
+#include "Snake.hpp"
 
 void place_treat_in_random_location() {
 

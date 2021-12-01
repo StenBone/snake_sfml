@@ -1,4 +1,4 @@
-#include "Snake.h"
+#include "Snake.hpp"
 
 sf::RectangleShape& Snake::make_segment(const int x_pos, const int y_pos, const sf::Color color = SNAKE_BODY_COLOR) {
 	sf::RectangleShape segment(UNIT_SQUARE_VEC2F);

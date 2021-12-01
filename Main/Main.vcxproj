@@ -148,7 +148,7 @@
     <ClInclude Include="Constants.hpp" />
     <ClInclude Include="CppUtils.hpp" />
     <ClInclude Include="ExampleTest.hpp" />
-    <ClInclude Include="Snake.h" />
+    <ClInclude Include="Snake.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-tidy" />

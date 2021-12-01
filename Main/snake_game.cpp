@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <stdlib.h>
+#include <time.h>
 #include "Constants.hpp"
 
 void place_treat_in_random_location() {
@@ -27,19 +29,46 @@ class Player {
 };
 
 class Actor {
+private:
 	// x, y position
+	int x = 0;
+	int y = 0;
+public:
+	Actor() : x(0), y(0) {}
+	Actor(int in_x, int in_y) : x(in_x), y(in_y) {}
 };
 
-class Snake {
+class Snake : public Actor {
+private:
+	std::vector<_____> body; //probably rectangleshapes of a certain color
+public:
+
 	// vector of segments
 };
 
-class PlayArea {
+class Scene {
+private:
+
+public: 
 	// data
 	// list of actors
 };
 
+void place_treat_at_random_pos() {
+	
+	int rand_x = rand() % WINDOW_BOUNDS_X;
+	int rand_y = rand() % WINDOW_BOUNDS_Y;
+
+	while (scene.at(rand_x, rand_y) == false) {
+		rand_x = rand() % WINDOW_BOUNDS_X;
+		rand_y = rand() % WINDOW_BOUNDS_Y;
+	}
+	Treat treat(rand_x, rand_y);
+	scene.add(treat);
+}
+
 int main() {
+	srand(time(NULL));
 	sf::RenderWindow window(sf::VideoMode(800, 600), "danger noodle");
 
 	/**
@@ -57,6 +86,8 @@ int main() {
 	// load assests: sound, font, textures
 
 	// setup game - place first treat, place snake in center
+	place_treat_at_random_pos();
+	Snake snake(WINDOW_BOUNDS_X / 2, WINDOW_BOUNDS_Y / 2);
 
 	// main loop
 	while (window.isOpen()) {

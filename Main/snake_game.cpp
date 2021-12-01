@@ -28,22 +28,84 @@ class Player {
 	// reference to snake actor
 };
 
-class Actor {
-private:
-	// x, y position
-	int x = 0;
-	int y = 0;
-public:
-	Actor() : x(0), y(0) {}
-	Actor(int in_x, int in_y) : x(in_x), y(in_y) {}
+class Actor : public sf::Transformable, public sf::Drawable {
+	//input handler
 };
 
-class Snake : public Actor {
+class Snake : public sf::Drawable {
 private:
-	std::vector<_____> body; //probably rectangleshapes of a certain color
+	sf::Vector2f tails_last_pos;
+	std::vector<sf::RectangleShape&> segments; //probably rectangleshapes of a certain color
+
+	sf::RectangleShape& make_segment(const int x_pos, const int y_pos, const sf::Color color = SNAKE_BODY_COLOR) {
+		sf::RectangleShape segment(UNIT_SQUARE_VEC2F);
+		segment.setPosition(x_pos, y_pos);
+		segment.setSize(UNIT_SQUARE_VEC2F);
+		segment.setFillColor(color);
+		segments.push_back(segment);
+	}
+	sf::RectangleShape& make_segment(const sf::Vector2f& pos, const sf::Color color = SNAKE_BODY_COLOR) {
+		return make_segment(pos.x, pos.y, color);
+	}
 public:
 
-	// vector of segments
+	const static enum class MOVEMENT_DIRECTIONS {
+		N, E, S, W
+	};
+
+	Snake(const int x_pos, const int y_pos) {
+		for (int i = 0; i < SNAKE_BODY_STARTING_SEGMENTS; i++) {
+			make_segment(x_pos, y_pos - (i * UNIT_SQUARE_IN_PX));
+		}
+		auto& head = segments.front();
+		head.setFillColor(SNAKE_HEAD_COLOR);
+	}
+
+	void move(MOVEMENT_DIRECTIONS dir) {
+		
+		int x = 0;
+		int y = 0;
+
+		switch (dir)
+		{
+		case Snake::MOVEMENT_DIRECTIONS::N:
+			y = 1;
+			break;
+		case Snake::MOVEMENT_DIRECTIONS::E:
+			x = 1;
+			break;
+		case Snake::MOVEMENT_DIRECTIONS::S:
+			y = -1;
+			break;
+		case Snake::MOVEMENT_DIRECTIONS::W:
+			x = -1;
+			break;
+		default:
+			break;
+		}
+
+		auto head_position = segments.front().getPosition();
+		auto old_position = head_position;
+		sf::Vector2f new_position(head_position.x + (x * UNIT_SQUARE_IN_PX), head_position.x + (y * UNIT_SQUARE_IN_PX));
+		
+		for (auto& segment : segments) {
+			old_position = segment.getPosition();
+			segment.setPosition(new_position); // position of the one before it
+			new_position = old_position;
+		}
+		tails_last_pos = old_position;
+	}
+
+	void grow() {
+		sf::RectangleShape segment(UNIT_SQUARE_VEC2F);
+		make_segment(tails_last_pos);
+	}
+
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const {
+		for (const auto& segment : segments) {
+			target.draw(segment, states);
+		}
+	}
 };
 
 class Scene {
@@ -68,7 +130,7 @@ void place_treat_at_random_pos() {
 }
 
 int main() {
-	srand(time(NULL));
+	srand(time(NULL)); // seed random number generator
 	sf::RenderWindow window(sf::VideoMode(800, 600), "danger noodle");
 
 	/**
@@ -96,5 +158,8 @@ int main() {
 		//check if snake's head is on a treat, in it's body, outside bounds
 		//if treat, then grow extra unit at tail
 		//if body or outside bounds then game over
+
+
+		//movement then grow
 	}
 } // what can this snake game do differently than others

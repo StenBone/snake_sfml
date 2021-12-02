@@ -10,4 +10,5 @@ const sf::Vector2f UNIT_SQUARE_VEC2F(UNIT_SQUARE_IN_PX, UNIT_SQUARE_IN_PX);
 const sf::Time	   SNAKE_MOVEMENT_UPDATE_INTERVAL{ sf::seconds(1.f) };
 const sf::Color SNAKE_BODY_COLOR = sf::Color::White;
 const sf::Color SNAKE_HEAD_COLOR = sf::Color::Green;
+const sf::Color TREAT_COLOR = sf::Color::Red;
 const int SNAKE_BODY_STARTING_SEGMENTS = 3;

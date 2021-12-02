@@ -8,18 +8,6 @@ void place_treat_in_random_location() {
 
 }
 
-void process_input() {
-
-}
-
-void load_textures() {
-	// fill texture manager
-}
-
-class TextureManager {
-
-};
-
 class Game {
 	// holds texture manager, member variables across the game
 };
@@ -33,46 +21,54 @@ class Actor : public sf::Transformable, public sf::Drawable {
 	//input handler
 };
 
-class Scene {
+class  Scene : sf::Drawable { 
 private:
+	std::unique_ptr<sf::RectangleShape> treat;
+public:
+	const Snake& snake;
 
-public: 
-	// data
-	// list of actors
+	Scene(const Snake& in_snake) : snake(in_snake) {}
+
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const {
+		target.draw(*treat, states);
+		target.draw(snake, states);
+	}
+
+	void place_treat_at_random_pos(Scene& scene) {
+
+		int rand_x = 0;
+		int rand_y = 0;
+
+		bool get_random_position = true;
+		while (get_random_position) {
+			rand_x = rand() % WINDOW_BOUNDS_X;
+			rand_y = rand() % WINDOW_BOUNDS_Y;
+			for (const auto& segment : snake.get_segments()) {
+				if (!segment.getGlobalBounds().contains(rand_x, rand_y)) {
+					get_random_position = false;
+					break;
+				}
+			}
+		}
+		// snap treat to grid
+		rand_x = rand_x - (rand_x % UNIT_SQUARE_IN_PX);
+		rand_y = rand_y - (rand_y % UNIT_SQUARE_IN_PX);
+
+		treat.reset(new sf::RectangleShape());
+		treat->setPosition(rand_x, rand_y);
+		treat->setSize(UNIT_SQUARE_VEC2F);
+		treat->setFillColor(TREAT_COLOR);
+	}
 };
 
-void place_treat_at_random_pos() {
-	
-	int rand_x = rand() % WINDOW_BOUNDS_X;
-	int rand_y = rand() % WINDOW_BOUNDS_Y;
 
-	while (scene.at(rand_x, rand_y) == false) {
-		rand_x = rand() % WINDOW_BOUNDS_X;
-		rand_y = rand() % WINDOW_BOUNDS_Y;
-	}
-	Treat treat(rand_x, rand_y);
-	scene.add(treat);
-}
 
 int main() {
 	srand(time(NULL)); // seed random number generator
 	sf::RenderWindow window(sf::VideoMode(800, 600), "danger noodle");
+	Snake snake(WINDOW_BOUNDS_X / 2, WINDOW_BOUNDS_Y / 2);
 
-	/**
-	game.loadscene("snake_level.json")
-		renderer.init
-		snake.init
-		input.init
-		assetmanager.load(snake.assets)
-		assetmananger.load(treat.assets)
-		assetmananger.close
-	game.begin_loop()
-	game.end()
-	*/
 
-	// load assests: sound, font, textures
-
-	// setup game - place first treat, place snake in center
 	place_treat_at_random_pos();
 	Snake snake(WINDOW_BOUNDS_X / 2, WINDOW_BOUNDS_Y / 2);
 

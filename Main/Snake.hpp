@@ -17,8 +17,11 @@ public:
 	};
 
 	Snake(const int x_pos, const int y_pos);
-	void move(MOVEMENT_DIRECTIONS dir);
+	const std::vector<sf::RectangleShape&>& get_segments() const {
+		return segments;
+	}
 	void grow();
+	void move(MOVEMENT_DIRECTIONS dir);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const;
 };
 

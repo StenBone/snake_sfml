@@ -1,4 +1,4 @@
-#include "Scene.h"
+#include "Scene.hpp"
 
 void Scene::place_treat_at_random_pos() {
 	int rand_x = 0;

@@ -149,7 +149,7 @@
     <ClInclude Include="Constants.hpp" />
     <ClInclude Include="CppUtils.hpp" />
     <ClInclude Include="ExampleTest.hpp" />
-    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Scene.hpp" />
     <ClInclude Include="Snake.hpp" />
   </ItemGroup>
   <ItemGroup>

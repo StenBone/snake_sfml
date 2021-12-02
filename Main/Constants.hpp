@@ -11,4 +11,5 @@ const sf::Time	   SNAKE_MOVEMENT_UPDATE_INTERVAL{ sf::seconds(1.f) };
 const sf::Color SNAKE_BODY_COLOR = sf::Color::White;
 const sf::Color SNAKE_HEAD_COLOR = sf::Color::Green;
 const sf::Color TREAT_COLOR = sf::Color::Red;
+const sf::Color BACKGROUND_COLOR = sf::Color::Black;
 const int SNAKE_BODY_STARTING_SEGMENTS = 3;

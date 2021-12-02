@@ -3,7 +3,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "Snake.hpp"
 
-class Scene : sf::Drawable {
+class Scene : public sf::Drawable {
 private:
 	std::unique_ptr<sf::RectangleShape> treat;
 public:

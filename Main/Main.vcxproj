@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="snake_game.cpp" />
   </ItemGroup>
@@ -148,6 +149,7 @@
     <ClInclude Include="Constants.hpp" />
     <ClInclude Include="CppUtils.hpp" />
     <ClInclude Include="ExampleTest.hpp" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Snake.hpp" />
   </ItemGroup>
   <ItemGroup>

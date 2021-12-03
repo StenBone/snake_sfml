@@ -10,6 +10,8 @@ private:
 public:
 	const Snake& snake;
 
+	static sf::Vector2f snap_point_to_unit_square(const int& x, const int& y);
+	static sf::Vector2f snap_point_to_unit_square(const sf::Vector2f& point);
 	Scene(const Snake& in_snake) : snake(in_snake) {}
 	void place_treat_at_random_pos();
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

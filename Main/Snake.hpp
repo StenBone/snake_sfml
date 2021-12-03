@@ -17,6 +17,7 @@ public:
 	};
 
 	Snake(const float x_pos, const float y_pos);
+	Snake(const sf::Vector2f& pos) : Snake(pos.x, pos.y) {}
 	const std::vector<sf::RectangleShape>& get_segments() const {
 		return segments;
 	}

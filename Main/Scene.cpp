@@ -1,5 +1,18 @@
 #include "Scene.hpp"
 
+sf::Vector2f Scene::snap_point_to_unit_square(const int& x, const int& y)
+{
+	sf::Vector2f result;
+	result.x = x - static_cast<float>(x % UNIT_SQUARE_IN_PX);
+	result.y = y - static_cast<float>(y % UNIT_SQUARE_IN_PX);
+	return result;
+}
+
+sf::Vector2f Scene::snap_point_to_unit_square(const sf::Vector2f& point)
+{
+	return Scene::snap_point_to_unit_square(static_cast<int>(point.x), static_cast<int>(point.y));
+}
+
 void Scene::place_treat_at_random_pos() {
 	int rand_x = 0;
 	int rand_y = 0;
@@ -17,11 +30,10 @@ void Scene::place_treat_at_random_pos() {
 		} 
 	} while(keep_looking_for_valid_pos);
 	// snap treat to grid
-	rand_x = rand_x - (rand_x % UNIT_SQUARE_IN_PX);
-	rand_y = rand_y - (rand_y % UNIT_SQUARE_IN_PX);
 
+	auto snapped_to_unit_square = Scene::snap_point_to_unit_square(rand_x, rand_y);
 	treat = std::make_unique<sf::RectangleShape>(UNIT_SQUARE_VEC2F);
-	treat->setPosition(static_cast<float>(rand_x), static_cast<float>(rand_y));
+	treat->setPosition(snapped_to_unit_square);
 	treat->setFillColor(TREAT_COLOR);
 }
 
@@ -33,13 +45,10 @@ void Scene::place_treat_at_random_pos() {
  bool Scene::snake_intersects_itself_or_wall() const
  {
 	 bool snake_intersects_itself_or_wall = false;
-	 auto snake_segments = snake.get_segments();
+	 const auto& snake_segments = snake.get_segments();
 	 // grab head and tail
 	 const auto head = snake_segments.front().getGlobalBounds();
 	 const auto tail = snake_segments.back().getGlobalBounds();
-	 // remove head and tail so that they will not be considered a part of the body
-	 snake_segments.erase(snake_segments.begin());
-	 snake_segments.erase(snake_segments.end() - 1);
 
 	 if (head.intersects(tail)) {
 		 return true;
@@ -47,7 +56,7 @@ void Scene::place_treat_at_random_pos() {
 
 	 for (int i = 1; i < snake_segments.size() - 1; i++) {
 		 const auto& segment_bounds = snake_segments[i].getGlobalBounds();
-		 if (head.intersects(segment_bounds) || tail.intersects(segment_bounds) || segment_bounds.intersects(PLAY_FIELD_BOUNDS)) {
+		 if (head.intersects(segment_bounds) || tail.intersects(segment_bounds) || !segment_bounds.intersects(PLAY_FIELD_BOUNDS)) {
 			 snake_intersects_itself_or_wall = true;
 			 break;
 		 }

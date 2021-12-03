@@ -14,7 +14,7 @@ int main()
     sf::Time delta_time{};
     sf::Time time_since_last_cell_simulation_update{};
     sf::RenderWindow window(sf::VideoMode(800, 600), "danger noodle");
-    Snake snake(WINDOW_BOUNDS_X / 2, WINDOW_BOUNDS_Y / 2);
+    Snake snake(Scene::snap_point_to_unit_square(WINDOW_BOUNDS_X / 2, WINDOW_BOUNDS_Y / 2));
     auto snake_direction = Snake::MOVEMENT_DIRECTIONS::N;
     Scene scene(snake);
     scene.place_treat_at_random_pos();
@@ -81,7 +81,7 @@ int main()
         {
             time_since_last_cell_simulation_update = sf::Time::Zero;
             snake.move(snake_direction);
-            if (scene.snake_intersects_treat()) //todo treat wrong size, can go back into snakes body, won't grow
+            if (scene.snake_intersects_treat()) //todo can go back into snakes body, won't grow
             {
                 snake.grow();
             }

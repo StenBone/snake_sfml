@@ -35,24 +35,22 @@ int main() {
 		sf::Event event{};
 		while (window.pollEvent(event)) {
 
-		switch (event.type) 
-		{
+			switch (event.type)
+			{
 			case sf::Event::Closed:
 				window.close();
 				break;
 
-			// KEY RELEASED
+
+				// KEY RELEASED
 			case sf::Event::KeyReleased: {
-				switch (event.key.code) 
+				switch (event.key.code)
 				{
 				case sf::Keyboard::Space:
-					
 					break;
 				}
 			}
-			 break;
-
-			// KEY RELEASED
+									   // KEY RELEASED
 			case sf::Event::KeyPressed: {
 				switch (event.key.code)
 				{
@@ -68,23 +66,21 @@ int main() {
 				case sf::Keyboard::A:
 					snake_direction = Snake::MOVEMENT_DIRECTIONS::W;
 					break;
-				default:
-					break;
 				}
 			}
+			}
 		}
-
 		// UPDATE
 		time_since_last_cell_simulation_update += delta_time;
 
 		if (time_since_last_cell_simulation_update >= SNAKE_MOVEMENT_UPDATE_INTERVAL) {
 			time_since_last_cell_simulation_update = sf::Time::Zero;
 			snake.move(snake_direction);
-			if (snake intersect treat) {
-				grow
+			if (scene.snake_intersects_treat()) {
+				snake.grow();
 			}
-			if (snake intersect itself or wall) {
-				game over
+			if (scene.snake_intersects_itself_or_wall()) {
+				return EXIT_SUCCESS;
 			}
 		}
 

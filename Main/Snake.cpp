@@ -1,6 +1,6 @@
 #include "Snake.hpp"
 
-sf::RectangleShape& Snake::make_segment(const int x_pos, const int y_pos, const sf::Color color = SNAKE_BODY_COLOR) {
+void Snake::add_segment(const int x_pos, const int y_pos, const sf::Color color = SNAKE_BODY_COLOR) {
 	sf::RectangleShape segment(UNIT_SQUARE_VEC2F);
 	segment.setPosition(x_pos, y_pos);
 	segment.setSize(UNIT_SQUARE_VEC2F);
@@ -8,13 +8,13 @@ sf::RectangleShape& Snake::make_segment(const int x_pos, const int y_pos, const 
 	segments.push_back(segment);
 }
 
-sf::RectangleShape& Snake::make_segment(const sf::Vector2f& pos, const sf::Color color = SNAKE_BODY_COLOR) {
-	return make_segment(pos.x, pos.y, color);
+void Snake::add_segment(const sf::Vector2f& pos, const sf::Color color = SNAKE_BODY_COLOR) {
+	return add_segment(pos.x, pos.y, color);
 }
 
 Snake::Snake(const int x_pos, const int y_pos) {
 	for (int i = 0; i < SNAKE_BODY_STARTING_SEGMENTS; i++) {
-		make_segment(x_pos, y_pos - (i * UNIT_SQUARE_IN_PX));
+		add_segment(x_pos, y_pos - (i * UNIT_SQUARE_IN_PX));
 	}
 	auto& head = segments.front();
 	head.setFillColor(SNAKE_HEAD_COLOR);
@@ -57,7 +57,7 @@ void Snake::move(Snake::MOVEMENT_DIRECTIONS dir) {
 
 void Snake::grow() {
 	sf::RectangleShape segment(UNIT_SQUARE_VEC2F);
-	make_segment(tails_last_pos);
+	add_segment(tails_last_pos);
 }
 
 void Snake::draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const {

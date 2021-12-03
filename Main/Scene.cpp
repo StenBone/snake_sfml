@@ -4,17 +4,18 @@ void Scene::place_treat_at_random_pos() {
 	int rand_x = 0;
 	int rand_y = 0;
 
-	bool get_random_position = true;
-	while (get_random_position) {
+	bool keep_looking_for_valid_pos = false;
+	do {
+		keep_looking_for_valid_pos = false;
 		rand_x = rand() % WINDOW_BOUNDS_X;
 		rand_y = rand() % WINDOW_BOUNDS_Y;
 		for (const auto& segment : snake.get_segments()) {
-			if (!segment.getGlobalBounds().contains(static_cast<float>(rand_x), static_cast<float>(rand_y))) {
-				get_random_position = false;
+			if (segment.getGlobalBounds().contains(static_cast<float>(rand_x), static_cast<float>(rand_y))) {
+				keep_looking_for_valid_pos = true;
 				break;
 			}
-		}
-	}
+		} 
+	} while(keep_looking_for_valid_pos);
 	// snap treat to grid
 	rand_x = rand_x - (rand_x % UNIT_SQUARE_IN_PX);
 	rand_y = rand_y - (rand_y % UNIT_SQUARE_IN_PX);
@@ -38,14 +39,14 @@ void Scene::place_treat_at_random_pos() {
 	 const auto tail = snake_segments.back().getGlobalBounds();
 	 // remove head and tail so that they will not be considered a part of the body
 	 snake_segments.erase(snake_segments.begin());
-	 snake_segments.erase(snake_segments.end());
+	 snake_segments.erase(snake_segments.end() - 1);
 
 	 if (head.intersects(tail)) {
 		 return true;
 	 }
 
-	 for (const auto& segment : snake_segments) {
-		 const auto& segment_bounds = segment.getGlobalBounds();
+	 for (int i = 1; i < snake_segments.size() - 1; i++) {
+		 const auto& segment_bounds = snake_segments[i].getGlobalBounds();
 		 if (head.intersects(segment_bounds) || tail.intersects(segment_bounds) || segment_bounds.intersects(PLAY_FIELD_BOUNDS)) {
 			 snake_intersects_itself_or_wall = true;
 			 break;

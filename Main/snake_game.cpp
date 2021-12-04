@@ -7,13 +7,17 @@
 #include "Scene.hpp"
 #include "Snake.hpp"
 
+struct GameStats {
+    unsigned int score = 0;
+};
+
 int main()
 {
     srand(static_cast<unsigned int>(time(NULL))); // seed random number generator
     sf::Clock clock{};
     sf::Time delta_time{};
     sf::Time time_since_last_cell_simulation_update{};
-    sf::RenderWindow window(sf::VideoMode(800, 600), "danger noodle");
+    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), WINDOW_NAME);
     Snake snake(Scene::snap_point_to_unit_square(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2));
     auto snake_direction = Snake::MOVEMENT_DIRECTIONS::N;
     Scene scene(snake);

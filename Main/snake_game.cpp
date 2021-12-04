@@ -7,8 +7,17 @@
 #include "Scene.hpp"
 #include "Snake.hpp"
 
-struct GameStats {
-    unsigned int score = 0;
+class Game {
+private:
+    struct GameStats {
+        unsigned int score = 0;
+    } game_stats; // todo look this up
+
+    enum class GameStates {
+        RUNNING,
+        PAUSED
+    };
+
 };
 
 int main()

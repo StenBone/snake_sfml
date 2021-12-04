@@ -60,16 +60,24 @@ int main()
                 switch (event.key.code)
                 {
                 case sf::Keyboard::W:
-                    snake_direction = Snake::MOVEMENT_DIRECTIONS::N;
+                    if (snake_direction != Snake::MOVEMENT_DIRECTIONS::S) {
+                        snake_direction = Snake::MOVEMENT_DIRECTIONS::N;
+                    }
                     break;
                 case sf::Keyboard::D:
-                    snake_direction = Snake::MOVEMENT_DIRECTIONS::E;
+                    if (snake_direction != Snake::MOVEMENT_DIRECTIONS::W) {
+                        snake_direction = Snake::MOVEMENT_DIRECTIONS::E;
+                    }
                     break;
                 case sf::Keyboard::S:
-                    snake_direction = Snake::MOVEMENT_DIRECTIONS::S;
+                    if (snake_direction != Snake::MOVEMENT_DIRECTIONS::N) {
+                        snake_direction = Snake::MOVEMENT_DIRECTIONS::S;
+                    }
                     break;
                 case sf::Keyboard::A:
-                    snake_direction = Snake::MOVEMENT_DIRECTIONS::W;
+                    if (snake_direction != Snake::MOVEMENT_DIRECTIONS::E) {
+                        snake_direction = Snake::MOVEMENT_DIRECTIONS::W;
+                    }
                     break;
                 }
             }
@@ -81,7 +89,7 @@ int main()
         {
             time_since_last_cell_simulation_update = sf::Time::Zero;
             snake.move(snake_direction);
-            if (scene.snake_intersects_treat()) // todo can go back into snakes body, won't grow
+            if (scene.snake_intersects_treat())
             {
                 snake.grow();
                 scene.place_treat_at_random_pos();

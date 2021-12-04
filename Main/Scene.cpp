@@ -20,8 +20,8 @@ void Scene::place_treat_at_random_pos() {
 	bool keep_looking_for_valid_pos = false;
 	do {
 		keep_looking_for_valid_pos = false;
-		rand_x = rand() % WINDOW_BOUNDS_X;
-		rand_y = rand() % WINDOW_BOUNDS_Y;
+		rand_x = rand() % SCREEN_WIDTH;
+		rand_y = rand() % SCREEN_HEIGHT;
 		for (const auto& segment : snake.get_segments()) {
 			if (segment.getGlobalBounds().contains(static_cast<float>(rand_x), static_cast<float>(rand_y))) {
 				keep_looking_for_valid_pos = true;
@@ -29,7 +29,6 @@ void Scene::place_treat_at_random_pos() {
 			}
 		} 
 	} while(keep_looking_for_valid_pos);
-	// snap treat to grid
 
 	auto snapped_to_unit_square = Scene::snap_point_to_unit_square(rand_x, rand_y);
 	treat = std::make_unique<sf::RectangleShape>(UNIT_SQUARE_VEC2F);
@@ -50,7 +49,7 @@ void Scene::place_treat_at_random_pos() {
 	 const auto head = snake_segments.front().getGlobalBounds();
 	 const auto tail = snake_segments.back().getGlobalBounds();
 
-	 if (head.intersects(tail)) {
+	 if (head.intersects(tail) || !head.intersects(PLAY_FIELD_BOUNDS) || !tail.intersects(PLAY_FIELD_BOUNDS)) {
 		 return true;
 	 }
 

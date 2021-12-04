@@ -18,10 +18,21 @@ int main()
     sf::Time delta_time{};
     sf::Time time_since_last_cell_simulation_update{};
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), WINDOW_NAME);
-    Snake snake(Scene::snap_point_to_unit_square(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2));
+    Snake snake(Scene::snap_point_to_unit_square(SCREEN_CENTER));
     auto snake_direction = Snake::MOVEMENT_DIRECTIONS::N;
     Scene scene(snake);
     scene.place_treat_at_random_pos();
+
+    sf::Font press_start_2p;
+    if (!press_start_2p.loadFromFile("PressStart2P-Regular.ttf")) {
+        return EXIT_FAILURE;
+    }
+    sf::Text pause_screen_message("Press 'space' to start game.", press_start_2p, 24);
+    pause_screen_message.setPosition(SCREEN_CENTER);
+    const auto& pause_screen_message_bounds = pause_screen_message.getLocalBounds();
+    pause_screen_message.setOrigin(pause_screen_message_bounds.width/2, pause_screen_message_bounds.height/2);
+
+    bool game_paused = true;
 
     // main loop
     while (window.isOpen())
@@ -107,6 +118,9 @@ int main()
         // RENDER
         window.clear(BACKGROUND_COLOR);
         window.draw(scene);
+        if (game_paused) {
+            window.draw(pause_screen_message);
+        }
         window.display();
     }
 

@@ -156,6 +156,7 @@
     <None Include=".clang-tidy" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="attribution.txt" />
     <Text Include="notes.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

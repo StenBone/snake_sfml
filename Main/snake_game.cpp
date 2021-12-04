@@ -81,7 +81,7 @@ int main()
         {
             time_since_last_cell_simulation_update = sf::Time::Zero;
             snake.move(snake_direction);
-            if (scene.snake_intersects_treat()) //todo can go back into snakes body, won't grow
+            if (scene.snake_intersects_treat()) // todo can go back into snakes body, won't grow
             {
                 snake.grow();
                 scene.place_treat_at_random_pos();

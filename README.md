@@ -5,4 +5,4 @@ My end goal for this project is to move it away from SFML as much as possible. W
 Technologies:
 Visual Studio 2022
 Clang Power Tools – Clang format, Clang tidy
-Google Test
+Microsoft Native Test Framework
